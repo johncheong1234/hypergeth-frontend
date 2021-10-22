@@ -1,12 +1,9 @@
+import xlsxParser from 'xls-parser';
 import axios from 'axios';
 import React, { Component } from "react";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { Button} from 'react-bootstrap';
 import { Dropdown} from 'react-bootstrap';;
-
-
-
-
 
 export default class Upload extends Component {
     constructor(props) {
@@ -73,11 +70,21 @@ export default class Upload extends Component {
             // Details of the uploaded file
             console.log(this.state.selectedFile);
             console.log(`this is the input ${this.state.dropDownValue.toLowerCase()}`)
+            console.log(formData)
+
+            xlsxParser.onFileSelection(this.state.selectedFile).then(data => {
+            var parsedData = data;
+            console.log(parsedData)
+            for(var i=0; i<parsedData['Sheet1'].length; i++){
+              console.log(parsedData['Sheet1'][i])
+              //put api below here
+            }
+            });
             // // Request made to the backend api
             // // Send formData object
-            axios.post(`http://3.229.199.112:3002/upload_${this.state.dropDownValue.toLowerCase()}_dict_complex`, formData)
-              .then(function (response) {
-              console.log(response.data)});
+            // axios.post(`http://3.229.199.112:3002/upload_${this.state.dropDownValue.toLowerCase()}_dict_complex`, formData)
+            //   .then(function (response) {
+            //   console.log(response.data)});
           }  
       };
 
