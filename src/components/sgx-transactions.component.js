@@ -1,39 +1,6 @@
 import React, { Component } from "react";
-import TransactionDataService from "../services/transaction.service";
+import TransactionDataService from "../services/transaction.service_3000";
 import { Link } from "react-router-dom";
-
-const sgx_transactions = [
-    {
-        recon_id:1,
-        reconcile_status: "success",
-        quantity: 100,
-        execution_date: "210719",
-        isin: "SG2F48989824",
-        rt: "B",
-        clino:"765aa1a943a5aa1d0cae8b5c97b68a17785179e6ef13aaaf1b99b78c2387dd09",
-        settlement_price:0.265,
-    },
-    {
-      recon_id:3,
-        reconcile_status: "fail",
-        quantity: 80,
-        execution_date: "210719",
-        isin: "SG2F48989824",
-        rt: "B",
-        clino:"765aa1a943a5aa1d0cae8b5c97b68a17785179e6ef13aaaf1b99b78c2387dd09",
-        settlement_price:0.265,
-    },
-    {
-      recon_id:4,
-      reconcile_status: "success",
-      quantity: 100,
-      execution_date: "210719",
-      isin: "SG2F48989824",
-      rt: "B",
-      clino:"765aa1a943a5aa1d0cae8b5c97b68a17785179e6ef13aaaf1b99b78c2387dd09",
-      settlement_price:0.265,
-  }
-]
 
 
 export default class SgxTransactions extends Component {
@@ -143,7 +110,7 @@ export default class SgxTransactions extends Component {
                               </Link>
                             </td>
                             <td class="col">{transaction.Record.Quantity}</td>
-                            <td class="col">{transaction.Record.Execution_date}</td>
+                            <td class="col">{transaction.Record.Execution_Date}</td>
                             <td class="col">{transaction.Record.ISIN}</td>
                             <td class="col">{transaction.Record.RT}</td>
                             <td class="col">{transaction.Record.CLINO.substring(0,8) + "..."}</td>

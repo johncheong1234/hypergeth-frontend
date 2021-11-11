@@ -82,14 +82,14 @@ export default class Upload extends Component {
             });
             // // Request made to the backend api
             // // Send formData object
-            // axios.post(`http://3.229.199.112:3002/upload_${this.state.dropDownValue.toLowerCase()}_dict_complex`, formData)
-            //   .then(function (response) {
-            //   console.log(response.data)});
+            axios.post(`http://localhost:3002/upload_${this.state.dropDownValue.toLowerCase()}_dict_complex`, formData)
+              .then(function (response) {
+              console.log(response.data)});
           }  
       };
 
       onReconcile = () => {
-        axios.get('http://3.229.199.112:3002/reconcile_orchestrate').then(
+        axios.get('http://localhost:3002/reconcile_orchestrate').then(
           function(response){
             console.log(response.data)
           }

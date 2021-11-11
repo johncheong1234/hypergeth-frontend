@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TransactionDataService from "../services/transaction.service_3000";
 import { Link } from "react-router-dom";
+import CsvDownload from 'react-json-to-csv'
 
 export default class PrimoTransactions extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class PrimoTransactions extends Component {
 
   retrieveTransactions() {
     //this.setState({transactions: primo_transactions});
-    TransactionDataService.getAllPrimo()
+    TransactionDataService.getAllPrimoFailed()
       .then(response => {
         this.setState({
           transactions: response.data
@@ -113,6 +114,9 @@ export default class PrimoTransactions extends Component {
                     ))} 
             </tbody>
         </table>
+
+        <CsvDownload data={transactions} filename = 'failed_primo.csv' />
+
       </div>
     );
   }

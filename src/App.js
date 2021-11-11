@@ -5,7 +5,9 @@ import "./App.css";
 
 import ReconcileTransactions from "./components/reconcile-transactions.component";
 import PrimoTransactions from "./components/primo-transactions.component";
+import FailedPrimoTransactions from "./components/fail-primo-transactions.component";
 import SgxTransactions from "./components/sgx-transactions.component";
+import FailedSgxTransactions from "./components/fail-sgx-transactions.component";
 import Transaction from "./components/transaction.component";
 import Upload from "./components/upload.component";
 
@@ -24,10 +26,23 @@ class App extends Component {
               </Link>
             </li>
             <li className="nav-item">
+              <Link to={"/fail_primo"} className="nav-link">
+                FAILED PRIMO
+              </Link>
+            </li>
+            
+            <li className="nav-item">
               <Link to={"/sgx"} className="nav-link">
                 SGX
               </Link>
             </li>
+
+            <li className="nav-item">
+              <Link to={"/fail_sgx"} className="nav-link">
+                FAILED SGX
+              </Link>
+            </li>
+
             <li className="nav-item">
               <Link to={"/reconciliation"} className="nav-link">
                 RECONCILIATION
@@ -40,7 +55,9 @@ class App extends Component {
           <Switch>
             <Route exact path={["/", "/home"]} component={ReconcileTransactions} />
             <Route exact path="/primo" component={PrimoTransactions} />
+            <Route exact path="/fail_primo" component={FailedPrimoTransactions} />
             <Route exact path="/sgx" component={SgxTransactions} />
+            <Route exact path="/fail_sgx" component={FailedSgxTransactions} />
             <Route exact path="/reconciliation" component={Upload} />
             <Route path="/transaction/:id" component={Transaction} />
           </Switch>

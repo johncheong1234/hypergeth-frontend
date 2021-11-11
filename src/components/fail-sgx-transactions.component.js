@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import TransactionDataService from "../services/transaction.service_3000";
 import { Link } from "react-router-dom";
+import CsvDownload from 'react-json-to-csv'
 
-export default class PrimoTransactions extends Component {
+
+export default class SgxTransactions extends Component {
   constructor(props) {
     super(props);
     this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
-    this.retrieveTransactions = this.retrieveTransactions.bind(this);
 
     this.state = {
       transactions: [],
@@ -15,7 +16,7 @@ export default class PrimoTransactions extends Component {
   }
 
   componentDidMount() {
-    this.retrieveTransactions();
+    this.retrieveRecords();
   }
 
   onChangeSearchTitle(e) {
@@ -26,19 +27,18 @@ export default class PrimoTransactions extends Component {
     });
   }
 
-  retrieveTransactions() {
-    //this.setState({transactions: primo_transactions});
-    TransactionDataService.getAllPrimo()
+  retrieveRecords() {
+    // this.setState({transactions: sgx_transactions});
+    TransactionDataService.getAllSgxFailed()
       .then(response => {
         this.setState({
           transactions: response.data
         });
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
-  
   }
 
 
@@ -56,12 +56,31 @@ export default class PrimoTransactions extends Component {
   }
 
   render() {
-    const { searchTitle, transactions } = this.state;
+    const { searchTitle, transactions} = this.state;
 
     return (
       <div className="list row">
-        
-        <h1>PRIMO Transactions</h1>
+        <div className="col-md-8">
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by title"
+              value={searchTitle}
+              onChange={this.onChangeSearchTitle}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={this.searchTitle}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <h1>SGX Transactions</h1>
         <table class="table table text-center table-image">
             <thead>
                 <tr>
@@ -70,23 +89,17 @@ export default class PrimoTransactions extends Component {
                 <th class="col">Recon ID</th>
                 <th class="col">Quantity</th>
                 <th class="col">Execution Date</th>
-                <th class="col">REUT</th>
-                <th class="col">Buy / Sell</th>
-                <th class="col">Account</th>
-                <th class="col">Counter Party</th>
-                <th class="col">Settlement Date</th>
-                <th class="col">Alpha status</th>
-                <th class="col">Trade_ID</th>
+                <th class="col">ISIN</th>
+                <th class="col">RT</th>
+                <th class="col">ClINO</th>
                 <th class="col">Settlement Price</th>
-                <th class="col">Principal</th>
-                <th class="col">Price Currency</th>
                 </tr>
             </thead>
             <tbody>
                 {transactions && 
                     transactions.map((transaction) => (
-                        <tr class="transaction-row ">
-                          <td class="col">{transaction.Record.ID}</td>
+                      <tr class="transaction-row ">
+                            <td class="col">{transaction.Record.ID}</td>
                             <div>
                             {transaction.Record.Status == 'pending' ? <button type="button" class="btn btn-warning btn-sm" id="status">{transaction.Record.Status}</button> : null}
                             {transaction.Record.Status == 'fail' ?  <button type="button" class="btn btn-danger btn-sm" id="status">{transaction.Record.Status}</button> : null}
@@ -102,17 +115,14 @@ export default class PrimoTransactions extends Component {
                             <td class="col">{transaction.Record.ISIN}</td>
                             <td class="col">{transaction.Record.RT}</td>
                             <td class="col">{transaction.Record.CLINO.substring(0,8) + "..."}</td>
-                            <td class="col">{transaction.Record.COUNTERPARTY}</td>
-                            <td class="col">{transaction.Record.SETTLEMENT_DATE}</td>
-                            <td class="col">{transaction.Record.Alpha_status}</td>
-                            <td class="col">{transaction.Record.TRADE_ID}</td>
                             <td class="col">{transaction.Record.Settlement_price}</td>
-                            <td class="col">{transaction.Record.PRINCIPAL}</td>
-                            <td class="col">{transaction.Record.PRICING_CURRENCY}</td>
                         </tr> 
                     ))} 
             </tbody>
         </table>
+
+        <CsvDownload data={transactions} filename = 'failed_sgx.csv' />
+
       </div>
     );
   }

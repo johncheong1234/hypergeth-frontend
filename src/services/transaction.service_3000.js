@@ -1,8 +1,12 @@
-import http from "../http-common";
+import http from "../http-common-3000";
 
 class TransactionDataService {
   getAllPrimo() {
     return http.get("/read_primo");
+  }
+
+  getAllPrimoFailed() {
+    return http.get("/read_primo_fail");
   }
 
   getPrimo(id) {
@@ -11,6 +15,10 @@ class TransactionDataService {
 
   getAllSgx() {
     return http.get("/read_sgx");
+  }
+
+  getAllSgxFailed() {
+    return http.get("/read_sgx_fail");
   }
 
   getSgx(id) {
